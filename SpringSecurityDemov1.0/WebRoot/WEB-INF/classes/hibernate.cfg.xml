@@ -1,0 +1,16 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+<session-factory>
+	<!-- 2.其他配置 -->
+	<property name="show_sql">true</property>
+	<property name="hbm2ddl.auto">update</property>
+
+	<!-- 3.导入映射文件 -->
+	<mapping resource="yh/model/Privilege.hbm.xml" />
+	<mapping resource="yh/model/Role.hbm.xml" />
+	<mapping resource="yh/model/User.hbm.xml" />
+</session-factory>
+</hibernate-configuration>

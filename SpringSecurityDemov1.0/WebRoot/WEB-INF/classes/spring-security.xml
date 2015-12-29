@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<b:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:b="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+                        http://www.springframework.org/schema/security 
+                        http://www.springframework.org/schema/security/spring-security-3.1.xsd ">
+
+	<http pattern="/index.jsp" security="none"/>
+		<http pattern="/**/*.jpg" security="none" />
+<http pattern="/**/*.png" security="none"/>
+<http pattern="/**/*.gif" security="none"/>
+<http pattern="/**/*.css" security="none"/>
+<http pattern="/**/*.js" security="none"/>
+	<http auto-config="true">
+		<intercept-url pattern="/**" />
+		<custom-filter ref="myFilter" before="FILTER_SECURITY_INTERCEPTOR"></custom-filter>
+	</http>
+	<authentication-manager alias="myAuthenticationManager">
+		<authentication-provider user-service-ref="myUserDetailsServiceImpl" />
+	</authentication-manager>
+
+	<b:bean id="myFilter" class="yh.security.AuthorityFilter">
+		<b:property name="source" ref="mySecurityMedadataSource" />
+		<b:property name="authenticationManager" ref="myAuthenticationManager" />
+		<b:property name="accessDecisionManager" ref="myAccessDecisionManager" />
+	</b:bean>
+	<b:bean id="myUserDetailsServiceImpl" class="yh.security.MyUserDetailsServiceImpl" >
+		<b:property name="userDao" ref="userDao"></b:property> 
+	</b:bean>
+	
+	<b:bean id="myAccessDecisionManager" class="yh.security.MyAccessDecisionManager" />
+	<b:bean id="mySecurityMedadataSource" class="yh.security.MySecurityMetadataSource" >
+	<b:constructor-arg name="privilegeDao" ref="privilegeDao"></b:constructor-arg> 
+	</b:bean>
+	
+</b:beans>
+
